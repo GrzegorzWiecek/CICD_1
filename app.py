@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request
 from sklearn.datasets import load_digits
 from sklearn.ensemble import RandomForestClassifier
