@@ -2,3 +2,5 @@ flask
 scikit-learn
 pillow
 numpy
+google-genai
+python-dotenv

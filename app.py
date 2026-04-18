@@ -3,11 +3,17 @@ from sklearn.datasets import load_digits
 from sklearn.ensemble import RandomForestClassifier
 from PIL import Image
 import numpy as np
+from google import genai
+from dotenv import load_dotenv
+
+load_dotenv()
+# The client gets the API key from the environment variable `GEMINI_API_KEY`.
+
 
 data = load_digits()
 X, y = data.data, data.target
 
-model = RandomForestClassifier(n_estimators=100, random_state=42)
+model = RandomForestClassifier(n_estimators=100)
 model.fit(X, y)
 
 app = Flask(__name__)
@@ -30,6 +36,27 @@ def hello():
 
     return render_template("digits.html", digit=digit)
 
+@app.route('/chat', methods=['GET', 'POST'])
+def chat():
+    response = None
+    if request.method == 'POST':
+        prompt = request.form['prompt']
+        client = genai.Client()
+        response = client.models.generate_content(
+            model="gemini-3-flash-preview", contents=prompt
+        )
+        #print(response.text)
+    return render_template('chat.html', response=response.text)
+
+@app.route('/add', methods=['GET', 'POST'])
+def add():
+    a = b = suma = None
+    if request.method == 'POST':
+        a = int(request.form['a'])
+        b = int(request.form['b'])
+        suma = a + b
+
+    return render_template('index.html', a=a, b=b, s=suma)
 
 if __name__ == '__main__':
     app.run(debug=True)
