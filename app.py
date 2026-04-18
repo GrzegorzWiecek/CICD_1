@@ -38,15 +38,16 @@ def hello():
 
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
-    response = None
+    response_text = None
     if request.method == 'POST':
         prompt = request.form['prompt']
-        client = genai.Client()
+        client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
         response = client.models.generate_content(
             model="gemini-3-flash-preview", contents=prompt
         )
+        response_text = response.text
         #print(response.text)
-    return render_template('chat.html', response=response.text)
+    return render_template('chat.html', response=response_text)
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
