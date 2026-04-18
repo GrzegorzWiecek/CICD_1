@@ -1,10 +1,16 @@
-from flask import Flask
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def hello():
-    return 'Hello, Big World!ppppp'
+    a = b = suma = None
+    if request.method == 'POST':
+        a = int(request.form['a'])
+        b = int(request.form['b'])
+        suma = a + b
+
+    return render_template('index.html', a=a, b=b, s=suma)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Kalkulator</title>
+</head>
+<body>
+<h1>Dodawanie liczb</h1>
+<form method="post">
+    Liczba 1 <input type="number" name="a" required><br>
+    Liczba 2 <input type="number" name="b" required><br>
+
+    <button type="submit">submit</button>
+
+</form>
+{% if s is not none %}
+    <h3>Suma: {{a}} + {{b}} = {{s}}</h3>
+{% endif %}
+
+</body>
+</html>
